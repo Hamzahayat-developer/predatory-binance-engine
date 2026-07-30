@@ -1,0 +1,133 @@
+name: "Predatory Binance Scanner"
+
+on:
+  schedule:
+    - cron: "0 */2 * * *"
+  workflow_dispatch:
+    inputs:
+      test_discord:
+        description: "Send Discord test"
+        required: false
+        default: "false"
+        type: choice
+        options: ["true", "false"]
+      log_level:
+        description: "Log level"
+        required: false
+        default: "INFO"
+        type: choice
+        options: ["DEBUG", "INFO", "WARNING"]
+
+jobs:
+  scan:
+    name: "Binance Futures Scan"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      BINANCE_API_KEY:      ${{ secrets.BINANCE_API_KEY }}
+      BINANCE_API_SECRET:   ${{ secrets.BINANCE_API_SECRET }}
+      DISCORD_WEBHOOK_URL:  ${{ secrets.DISCORD_WEBHOOK_URL }}
+      ACCOUNT_BALANCE_USDT: ${{ secrets.ACCOUNT_BALANCE_USDT || '1000' }}
+      LOG_LEVEL:            ${{ github.event.inputs.log_level || 'INFO' }}
+      PYTHONUNBUFFERED:     "1"
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Python 3.11"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: "Restore signal state"
+        uses: actions/cache@v4
+        with:
+          path: logs/signal_state.json
+          key: signal-state-${{ github.run_id }}
+          restore-keys: signal-state-
+
+      - name: "Install deps"
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: "Prepare logs"
+        run: mkdir -p logs
+
+      - name: "Discord test"
+        if: github.event.inputs.test_discord == 'true' && github.event_name == 'workflow_dispatch'
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python3 << 'EOF'
+          import asyncio, aiohttp, os, sys
+          wh = os.getenv("DISCORD_WEBHOOK_URL", "")
+          print(f"Webhook present: {'YES' if wh else 'NO'}")
+          if not wh: sys.exit(1)
+          payload = {
+            "username": "Predatory Binance Engine",
+            "embeds": [{
+              "title": "Discord Webhook Test",
+              "description": "Your webhook is working. Engine will now scan.",
+              "color": 0x00FF88
+            }]
+          }
+          async def send():
+            async with aiohttp.ClientSession() as s:
+              async with s.post(wh, json=payload, timeout=aiohttp.ClientTimeout(total=10)) as r:
+                print(f"Discord: {r.status}")
+          asyncio.run(send())
+          EOF
+
+      - name: "Market hours guard"
+        id: hours
+        run: |
+          python3 << 'EOF'
+          from datetime import datetime, timezone
+          now = datetime.now(timezone.utc)
+          start, end = 5, 21
+          open_ = start <= now.hour < end
+          print(f"UTC {now.hour}:00 — {'OPEN' if open_ else 'CLOSED'} ({start}:00-{end}:00)")
+          with open("GITHUB_OUTPUT","a") as f:
+            f.write(f"open={'true' if open_ else 'false'}\n")
+          EOF
+
+      - name: "Run scanner"
+        if: steps.hours.outputs.open == 'true'
+        run: |
+          echo "--- Predatory Binance Futures ---"
+          echo "Scan: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          python main.py --mode once
+
+      - name: "Save signal state"
+        if: always()
+        uses: actions/cache@v4
+        with:
+          path: logs/signal_state.json
+          key: signal-state-${{ github.run_id }}
+
+      - name: "Upload logs"
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-logs-${{ github.run_id }}
+          path: logs/
+          retention-days: 3
+
+      - name: "Crash alert"
+        if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python3 -c "
+          import asyncio,aiohttp,os
+          wh=os.getenv('DISCORD_WEBHOOK_URL','')
+          if not wh: exit(0)
+          async def s():
+            async with aiohttp.ClientSession() as c:
+              await c.post(wh,json={'username':'Engine','embeds':[{'title':'Scanner Crashed','description':'Check GitHub Actions logs.','color':0xFF0000}]})
+          asyncio.run(s())
+          "
