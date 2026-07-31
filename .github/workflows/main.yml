@@ -24,6 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
+    permissions:
+      contents: write
+
     env:
       BINANCE_API_KEY:      ${{ secrets.BINANCE_API_KEY }}
       BINANCE_API_SECRET:   ${{ secrets.BINANCE_API_SECRET }}
@@ -101,6 +104,23 @@ jobs:
           echo "--- Predatory Binance Futures ---"
           echo "Scan: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           python main.py --mode once
+
+      - name: "Commit signals"
+        if: steps.hours.outputs.open == 'true'
+        run: |
+          if [ -f signals/history.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add signals/history.json
+            if git diff --cached --quiet; then
+              echo "No new signals — nothing to commit."
+            else
+              git commit -m "Update signals: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+              git push
+            fi
+          else
+            echo "No signals file produced this run."
+          fi
 
       - name: "Save signal state"
         if: always()

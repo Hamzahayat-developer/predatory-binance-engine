@@ -388,6 +388,23 @@ class PredatoryBinanceEngine:
             logger.info("Signal saved to logs/last_signal.json")
         except Exception as e:
             logger.warning("Save signal JSON: %s", e)
+        self._append_history(data)
+
+    def _append_history(self, data):
+        try:
+            path = Path("signals/history.json")
+            history = []
+            if path.exists():
+                history = json.loads(path.read_text())
+            history = [h for h in history if not (
+                h.get("symbol") == data["symbol"] and h.get("direction") == data["direction"]
+            )]
+            history.insert(0, data)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(history[:30], indent=2))
+            logger.info("Signal appended to %s (%d total)", path, len(history[:30]))
+        except Exception as e:
+            logger.warning("Append history: %s", e)
 
 
 def _pid_file() -> Path:
