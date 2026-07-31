@@ -17,6 +17,12 @@ on:
         default: "INFO"
         type: choice
         options: ["DEBUG", "INFO", "WARNING"]
+      ignore_hours:
+        description: "Bypass market hours (manual test)"
+        required: false
+        default: "false"
+        type: choice
+        options: ["true", "false"]
 
 jobs:
   scan:
@@ -89,14 +95,19 @@ jobs:
         id: hours
         run: |
           python3 << 'EOF'
+          import os
           from datetime import datetime, timezone
           now = datetime.now(timezone.utc)
           start, end = 5, 21
           open_ = start <= now.hour < end
-          print(f"UTC {now.hour}:00 — {'OPEN' if open_ else 'CLOSED'} ({start}:00-{end}:00)")
+          ignore = os.getenv("IGNORE_HOURS", "false") == "true"
+          run_scan = open_ or ignore
+          print(f"UTC {now.hour}:00 — {'OPEN' if open_ else 'CLOSED'} ({start}:00-{end}:00), ignore={ignore}")
           with open("GITHUB_OUTPUT","a") as f:
-            f.write(f"open={'true' if open_ else 'false'}\n")
+            f.write(f"open={'true' if run_scan else 'false'}\n")
           EOF
+        env:
+          IGNORE_HOURS: ${{ github.event.inputs.ignore_hours || 'false' }}
 
       - name: "Run scanner"
         if: steps.hours.outputs.open == 'true'
