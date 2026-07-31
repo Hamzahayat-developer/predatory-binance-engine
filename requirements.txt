@@ -1,7 +1,6 @@
 ccxt==4.3.28
 pandas==2.2.2
 numpy>=2.0.0
-pandas-ta-classic>=0.5.44
 aiohttp==3.9.5
 fastapi==0.111.0
 uvicorn[standard]==0.30.1

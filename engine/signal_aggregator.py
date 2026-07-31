@@ -6,8 +6,8 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional, Dict, Any
-import pandas_ta as ta
 import pandas as pd
+from . import ta
 import config
 
 logger = logging.getLogger("aggregator")

@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "symbol": "BNB/USDT:USDT",
+    "direction": "LONG",
+    "score": 35,
+    "label": "ROTATION | BNB/USDT:USDT | trend+funding rotation (score=48)",
+    "entryPrice": 587.905,
+    "slPrice": 586.1413,
+    "tp1": 589.6687,
+    "tp2": 591.4324,
+    "tp3": 594.078,
+    "rrRatio": 3.5,
+    "leverage": 7,
+    "breakdown": {
+      "rotation": 35
+    },
+    "timestamp": "2026-07-31T03:01:39.472757+00:00"
+  }
+]
