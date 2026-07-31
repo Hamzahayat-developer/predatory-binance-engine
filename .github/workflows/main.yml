@@ -103,9 +103,12 @@ jobs:
           ignore = os.getenv("IGNORE_HOURS", "false") == "true"
           run_scan = open_ or ignore
           print(f"UTC {now.hour}:00 — {'OPEN' if open_ else 'CLOSED'} ({start}:00-{end}:00), ignore={ignore}")
+          out = os.environ.get("GITHUB_OUTPUT", "")
           val = "true" if run_scan else "false"
-          with open("GITHUB_OUTPUT","a") as f:
-            f.write("open=" + val + "\n")
+          if out:
+            with open(out, "a") as f:
+              f.write("open=" + val + "\n")
+          print(f"GITHUB_OUTPUT set to: {val}")
           EOF
         env:
           IGNORE_HOURS: ${{ github.event.inputs.ignore_hours || 'false' }}
