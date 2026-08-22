@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "BTC/USDT:USDT",
+    "direction": "LONG",
+    "score": 35,
+    "label": "ROTATION | BTC/USDT:USDT | trend+funding rotation (score=40)",
+    "entryPrice": 77240.45,
+    "slPrice": 77008.7286,
+    "tp1": 77472.1714,
+    "tp2": 77703.8927,
+    "tp3": 78051.4747,
+    "rrRatio": 3.5,
+    "leverage": 10,
+    "breakdown": {
+      "rotation": 35
+    },
+    "timestamp": "2026-08-22T08:29:41.075536+00:00"
+  },
+  {
     "symbol": "BNB/USDT:USDT",
     "direction": "LONG",
     "score": 35,
