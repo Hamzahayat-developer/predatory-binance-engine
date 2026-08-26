@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "ARB/USDT:USDT",
+    "direction": "SHORT",
+    "score": 35,
+    "label": "ROTATION | ARB/USDT:USDT | trend+funding rotation (score=40)",
+    "entryPrice": 0.08926500000000001,
+    "slPrice": 0.0895,
+    "tp1": 0.089,
+    "tp2": 0.0887,
+    "tp3": 0.0883,
+    "rrRatio": 3.5,
+    "leverage": 5,
+    "breakdown": {
+      "rotation": 35
+    },
+    "timestamp": "2026-08-26T19:47:54.901809+00:00"
+  },
+  {
     "symbol": "BTC/USDT:USDT",
     "direction": "LONG",
     "score": 35,
