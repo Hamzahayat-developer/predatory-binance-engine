@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "BNB/USDT:USDT",
+    "direction": "LONG",
+    "score": 35,
+    "label": "ROTATION | BNB/USDT:USDT | trend+funding rotation (score=48)",
+    "entryPrice": 735.465,
+    "slPrice": 733.2586,
+    "tp1": 737.6714,
+    "tp2": 739.8778,
+    "tp3": 743.1874,
+    "rrRatio": 3.5,
+    "leverage": 7,
+    "breakdown": {
+      "rotation": 35
+    },
+    "timestamp": "2026-09-12T13:23:07.319194+00:00"
+  },
+  {
     "symbol": "ARB/USDT:USDT",
     "direction": "SHORT",
     "score": 35,
@@ -32,22 +49,5 @@
       "rotation": 35
     },
     "timestamp": "2026-08-22T08:29:41.075536+00:00"
-  },
-  {
-    "symbol": "BNB/USDT:USDT",
-    "direction": "LONG",
-    "score": 35,
-    "label": "ROTATION | BNB/USDT:USDT | trend+funding rotation (score=48)",
-    "entryPrice": 587.905,
-    "slPrice": 586.1413,
-    "tp1": 589.6687,
-    "tp2": 591.4324,
-    "tp3": 594.078,
-    "rrRatio": 3.5,
-    "leverage": 7,
-    "breakdown": {
-      "rotation": 35
-    },
-    "timestamp": "2026-07-31T03:01:39.472757+00:00"
   }
 ]
