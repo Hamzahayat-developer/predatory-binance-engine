@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "ETH/USDT:USDT",
+    "direction": "LONG",
+    "score": 35,
+    "label": "ROTATION | ETH/USDT:USDT | trend+funding rotation (score=48)",
+    "entryPrice": 2626.605,
+    "slPrice": 2618.7252,
+    "tp1": 2634.4848,
+    "tp2": 2642.3646,
+    "tp3": 2654.1844,
+    "rrRatio": 3.5,
+    "leverage": 10,
+    "breakdown": {
+      "rotation": 35
+    },
+    "timestamp": "2026-09-20T17:24:02.677946+00:00"
+  },
+  {
     "symbol": "BNB/USDT:USDT",
     "direction": "LONG",
     "score": 35,
