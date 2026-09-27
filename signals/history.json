@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "SUI/USDT:USDT",
+    "direction": "LONG",
+    "score": 35,
+    "label": "ROTATION | SUI/USDT:USDT | trend+funding rotation (score=40)",
+    "entryPrice": 1.2680500000000001,
+    "slPrice": 1.2642,
+    "tp1": 1.2719,
+    "tp2": 1.2757,
+    "tp3": 1.2814,
+    "rrRatio": 3.5,
+    "leverage": 5,
+    "breakdown": {
+      "rotation": 35
+    },
+    "timestamp": "2026-09-27T19:34:40.540446+00:00"
+  },
+  {
     "symbol": "ETH/USDT:USDT",
     "direction": "LONG",
     "score": 35,
