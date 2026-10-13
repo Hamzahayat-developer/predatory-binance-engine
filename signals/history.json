@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "XRP/USDT:USDT",
+    "direction": "SHORT",
+    "score": 35,
+    "label": "ROTATION | XRP/USDT:USDT | trend+funding rotation (score=48)",
+    "entryPrice": 1.3684500000000002,
+    "slPrice": 1.3726,
+    "tp1": 1.3643,
+    "tp2": 1.3602,
+    "tp3": 1.3541,
+    "rrRatio": 3.5,
+    "leverage": 7,
+    "breakdown": {
+      "rotation": 35
+    },
+    "timestamp": "2026-10-13T09:01:25.934603+00:00"
+  },
+  {
     "symbol": "BTC/USDT:USDT",
     "direction": "LONG",
     "score": 35,
