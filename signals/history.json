@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "BTC/USDT:USDT",
+    "direction": "LONG",
+    "score": 35,
+    "label": "ROTATION | BTC/USDT:USDT | trend+funding rotation (score=48)",
+    "entryPrice": 81019.95,
+    "slPrice": 80776.8901,
+    "tp1": 81263.0099,
+    "tp2": 81506.0697,
+    "tp3": 81870.6595,
+    "rrRatio": 3.5,
+    "leverage": 10,
+    "breakdown": {
+      "rotation": 35
+    },
+    "timestamp": "2026-10-28T07:57:56.254093+00:00"
+  },
+  {
     "symbol": "XRP/USDT:USDT",
     "direction": "SHORT",
     "score": 35,
@@ -15,23 +32,6 @@
       "rotation": 35
     },
     "timestamp": "2026-10-13T09:01:25.934603+00:00"
-  },
-  {
-    "symbol": "BTC/USDT:USDT",
-    "direction": "LONG",
-    "score": 35,
-    "label": "ROTATION | BTC/USDT:USDT | trend+funding rotation (score=0)",
-    "entryPrice": 83245.15,
-    "slPrice": 82995.4146,
-    "tp1": 83494.8854,
-    "tp2": 83744.6209,
-    "tp3": 84119.2241,
-    "rrRatio": 3.5,
-    "leverage": 10,
-    "breakdown": {
-      "rotation": 35
-    },
-    "timestamp": "2026-09-30T08:04:40.035888+00:00"
   },
   {
     "symbol": "SUI/USDT:USDT",
